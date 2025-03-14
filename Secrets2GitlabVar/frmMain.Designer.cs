@@ -55,6 +55,9 @@
             chkRememberInput = new CheckBox();
             lblResetSet = new Label();
             lblStats = new Label();
+            chkInWW = new CheckBox();
+            chkOutWW = new CheckBox();
+            chkIgnorePropWNoVal = new CheckBox();
             SuspendLayout();
             // 
             // txtIn
@@ -320,7 +323,7 @@
             // chkAutoCopy
             // 
             chkAutoCopy.AutoSize = true;
-            chkAutoCopy.Location = new Point(662, 6);
+            chkAutoCopy.Location = new Point(244, 415);
             chkAutoCopy.Name = "chkAutoCopy";
             chkAutoCopy.Size = new Size(238, 19);
             chkAutoCopy.TabIndex = 9;
@@ -331,11 +334,11 @@
             // chkRememberInput
             // 
             chkRememberInput.AutoSize = true;
-            chkRememberInput.Location = new Point(307, 6);
+            chkRememberInput.Location = new Point(12, 415);
             chkRememberInput.Name = "chkRememberInput";
-            chkRememberInput.Size = new Size(169, 19);
+            chkRememberInput.Size = new Size(220, 19);
             chkRememberInput.TabIndex = 11;
-            chkRememberInput.Text = "Remember for the next run";
+            chkRememberInput.Text = "Remember the input for the next run";
             chkRememberInput.UseVisualStyleBackColor = true;
             // 
             // lblResetSet
@@ -343,7 +346,7 @@
             lblResetSet.AutoSize = true;
             lblResetSet.Cursor = Cursors.Hand;
             lblResetSet.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
-            lblResetSet.Location = new Point(689, 391);
+            lblResetSet.Location = new Point(494, 416);
             lblResetSet.Name = "lblResetSet";
             lblResetSet.Size = new Size(79, 15);
             lblResetSet.TabIndex = 14;
@@ -354,19 +357,58 @@
             // 
             lblStats.Font = new Font("Segoe UI", 9F);
             lblStats.ForeColor = Color.Gray;
-            lblStats.Location = new Point(777, 391);
+            lblStats.Location = new Point(579, 417);
             lblStats.Name = "lblStats";
-            lblStats.Size = new Size(181, 15);
+            lblStats.Size = new Size(379, 15);
             lblStats.TabIndex = 14;
             lblStats.Text = "-";
-            lblStats.TextAlign = ContentAlignment.MiddleRight;
+            lblStats.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // chkInWW
+            // 
+            chkInWW.AutoSize = true;
+            chkInWW.Checked = true;
+            chkInWW.CheckState = CheckState.Checked;
+            chkInWW.Location = new Point(306, 6);
+            chkInWW.Name = "chkInWW";
+            chkInWW.Size = new Size(84, 19);
+            chkInWW.TabIndex = 9;
+            chkInWW.Text = "Word wrap";
+            chkInWW.UseVisualStyleBackColor = true;
+            chkInWW.CheckedChanged += chkInWW_CheckedChanged;
+            // 
+            // chkOutWW
+            // 
+            chkOutWW.AutoSize = true;
+            chkOutWW.Checked = true;
+            chkOutWW.CheckState = CheckState.Checked;
+            chkOutWW.Location = new Point(662, 6);
+            chkOutWW.Name = "chkOutWW";
+            chkOutWW.Size = new Size(84, 19);
+            chkOutWW.TabIndex = 9;
+            chkOutWW.Text = "Word wrap";
+            chkOutWW.UseVisualStyleBackColor = true;
+            chkOutWW.CheckedChanged += chkOutWW_CheckedChanged;
+            // 
+            // chkIgnorePropWNoVal
+            // 
+            chkIgnorePropWNoVal.AutoSize = true;
+            chkIgnorePropWNoVal.Checked = true;
+            chkIgnorePropWNoVal.CheckState = CheckState.Checked;
+            chkIgnorePropWNoVal.Location = new Point(689, 390);
+            chkIgnorePropWNoVal.Name = "chkIgnorePropWNoVal";
+            chkIgnorePropWNoVal.Size = new Size(215, 19);
+            chkIgnorePropWNoVal.TabIndex = 9;
+            chkIgnorePropWNoVal.Text = "Ignore properties with empty values";
+            chkIgnorePropWNoVal.UseVisualStyleBackColor = true;
+            chkIgnorePropWNoVal.CheckedChanged += TriggerConvert;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(971, 419);
+            ClientSize = new Size(971, 443);
             Controls.Add(cmbArrayBrack);
             Controls.Add(cmbArrayBeh);
             Controls.Add(cmbChildBeh);
@@ -385,7 +427,10 @@
             Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(btnConvert);
+            Controls.Add(chkOutWW);
+            Controls.Add(chkInWW);
             Controls.Add(chkAutoCopy);
+            Controls.Add(chkIgnorePropWNoVal);
             Controls.Add(chkTrimVal);
             Controls.Add(chkTrimProp);
             Controls.Add(chkSpaceInES);
@@ -434,5 +479,8 @@
         private CheckBox chkRememberInput;
         private Label lblResetSet;
         private Label lblStats;
+        private CheckBox chkInWW;
+        private CheckBox chkOutWW;
+        private CheckBox chkIgnorePropWNoVal;
     }
 }

@@ -44,6 +44,8 @@ namespace Secrets2GitlabVar
             chkAutoConvert.Checked = Settings.AutoConvert;
             chkAutoCopy.Checked = Settings.AutoCopy;
             chkRememberInput.Checked = Settings.RememberInput;
+            chkInWW.Checked = Settings.InWordWrap;
+            chkOutWW.Checked = Settings.OutWordWrap;
             chkSpaceInES.Checked = Settings.ConvertOptions.SpacesInEqualitySymbol;
             chkTrimProp.Checked = Settings.ConvertOptions.TrimProperties;
             chkTrimVal.Checked = Settings.ConvertOptions.TrimValues;
@@ -71,7 +73,8 @@ namespace Secrets2GitlabVar
                     ArrayBrackets = (ArrayBrackets)cmbArrayBrack.SelectedIndex,
                     SpacesInEqualitySymbol = chkSpaceInES.Checked,
                     TrimProperties = chkTrimProp.Checked,
-                    TrimValues = chkTrimVal.Checked
+                    TrimValues = chkTrimVal.Checked,
+                    IgnorePropertiesWithEmptyValues = chkIgnorePropWNoVal.Checked
                 };
 
                 string result = ProcessJson(data, convertOptions);
@@ -109,6 +112,7 @@ namespace Secrets2GitlabVar
                 if (token is JValue value)
                 {
                     string valueStr = value.ToString();
+                    if (convertOptions.IgnorePropertiesWithEmptyValues && valueStr.INOE()) { continue; }
                     if (convertOptions.TrimProperties) { path = path.Replace(" ", string.Empty); }
                     if (convertOptions.TrimValues) { valueStr = valueStr.Replace(" ", string.Empty); }
 
@@ -220,6 +224,8 @@ namespace Secrets2GitlabVar
             Settings.AutoConvert = chkAutoConvert.Checked;
             Settings.AutoCopy = chkAutoCopy.Checked;
             Settings.RememberInput = chkRememberInput.Checked;
+            Settings.InWordWrap = chkInWW.Checked;
+            Settings.OutWordWrap = chkOutWW.Checked;
             Settings.ConvertOptions.SpacesInEqualitySymbol = chkSpaceInES.Checked;
             Settings.ConvertOptions.TrimProperties = chkTrimProp.Checked;
             Settings.ConvertOptions.TrimValues = chkTrimVal.Checked;
@@ -237,6 +243,8 @@ namespace Secrets2GitlabVar
             Settings.AutoConvert = false;
             Settings.AutoCopy = false;
             Settings.RememberInput = false;
+            Settings.InWordWrap = true;
+            Settings.OutWordWrap = true;
             Settings.ConvertOptions.SpacesInEqualitySymbol = false;
             Settings.ConvertOptions.TrimProperties = true;
             Settings.ConvertOptions.TrimValues = true;
@@ -249,9 +257,19 @@ namespace Secrets2GitlabVar
             ApplySettingsToUI();
         }
 
+        private void chkInWW_CheckedChanged(object sender, EventArgs e)
+        {
+            txtIn.WordWrap = chkInWW.Checked;
+        }
+
+        private void chkOutWW_CheckedChanged(object sender, EventArgs e)
+        {
+            txtOut.WordWrap = chkOutWW.Checked;
+        }
+
         public void UpdateStats()
         {
-            lblStats.Text = $"Runs: {Settings.Runs}, Conv.: {Settings.Conversions}";
+            lblStats.Text = $"Runs: {Settings.Runs}, Conversions: {Settings.Conversions}";
         }
 
         [Obsolete("Replaced by the new 'ProcessJson' method that can handle more convert options.")]

@@ -17,6 +17,7 @@ namespace Secrets2GitlabVar.Entities
         public bool SpacesInEqualitySymbol { get; set; } = false;
         public bool TrimProperties { get; set; } = true;
         public bool TrimValues { get; set; } = true;
+        public bool IgnorePropertiesWithEmptyValues { get; set; } = true;
     }
 
     public enum EqualitySymbol

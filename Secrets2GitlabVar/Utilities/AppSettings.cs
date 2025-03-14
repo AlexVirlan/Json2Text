@@ -16,6 +16,8 @@ namespace Secrets2GitlabVar.Utilities
         public static bool AutoConvert = false;
         public static bool AutoCopy = false;
         public static bool RememberInput = false;
+        public static bool InWordWrap = true;
+        public static bool OutWordWrap = true;
         public static ConvertOptions ConvertOptions = new();
         public static string InputData = "";
     }
@@ -38,6 +40,12 @@ namespace Secrets2GitlabVar.Utilities
 
         [JsonProperty("RememberInput")]
         public bool rememberInput { get { return RememberInput; } set { RememberInput = value; } }
+
+        [JsonProperty("InWordWrap")]
+        public bool inWordWrap { get { return InWordWrap; } set { InWordWrap = value; } }
+
+        [JsonProperty("OutWordWrap")]
+        public bool outWordWrap { get { return OutWordWrap; } set { OutWordWrap = value; } }
 
         [JsonProperty("ConvertOptions")]
         public ConvertOptions convertOptions { get { return ConvertOptions; } set { ConvertOptions = value; } }
