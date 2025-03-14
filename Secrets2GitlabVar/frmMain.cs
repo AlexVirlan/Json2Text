@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.IO;
+using Secrets2GitlabVar.Entities;
+using Secrets2GitlabVar.Utilities;
+using System.Text;
 
 namespace Secrets2GitlabVar
 {
@@ -20,11 +21,10 @@ namespace Secrets2GitlabVar
         private void frmMain_Load(object sender, EventArgs e)
         {
             _loading = true;
-            cmbES.SelectedIndex = 0;
-            cmbChildBeh.SelectedIndex = 0;
-            cmbChildSep.SelectedIndex = 0;
-            cmbArrayBeh.SelectedIndex = 0;
-            cmbArrayBrack.SelectedIndex = 1;
+
+            FunctionResponse frLoadSet = AppSettings.Load();
+            Settings.Runs++;
+            ApplySettingsToUI();
 
             if (_args is not null && _args.Count > 0)
             {
@@ -36,15 +36,32 @@ namespace Secrets2GitlabVar
                 }
             }
 
-            // Load demo vals from resources
-            // LoadSettings
             _loading = false;
+        }
+
+        private void ApplySettingsToUI()
+        {
+            chkAutoConvert.Checked = Settings.AutoConvert;
+            chkAutoCopy.Checked = Settings.AutoCopy;
+            chkRememberInput.Checked = Settings.RememberInput;
+            chkSpaceInES.Checked = Settings.ConvertOptions.SpacesInEqualitySymbol;
+            chkTrimProp.Checked = Settings.ConvertOptions.TrimProperties;
+            chkTrimVal.Checked = Settings.ConvertOptions.TrimValues;
+            cmbES.SelectedIndex = (int)Settings.ConvertOptions.EqualitySymbol;
+            cmbChildBeh.SelectedIndex = (int)Settings.ConvertOptions.ChildBehaviour;
+            cmbChildSep.SelectedIndex = (int)Settings.ConvertOptions.ChildSeparator;
+            cmbArrayBeh.SelectedIndex = (int)Settings.ConvertOptions.ArrayBehaviour;
+            cmbArrayBrack.SelectedIndex = (int)Settings.ConvertOptions.ArrayBrackets;
+            if (Settings.RememberInput) { txtIn.Text = Settings.InputData; }
+            UpdateStats();
         }
 
         private string Convert(string data)
         {
             try
             {
+                if (data.INOE()) { return string.Empty; }
+
                 ConvertOptions convertOptions = new ConvertOptions()
                 {
                     EqualitySymbol = (EqualitySymbol)cmbES.SelectedIndex,
@@ -57,11 +74,12 @@ namespace Secrets2GitlabVar
                     TrimValues = chkTrimVal.Checked
                 };
 
-                return ProcessJson(data, convertOptions);
+                string result = ProcessJson(data, convertOptions);
+                if (chkAutoCopy.Checked && !result.INOE()) { Clipboard.SetText(result); }
+                Settings.Conversions++;
+                UpdateStats();
 
-                //JToken token = JToken.Parse(txtIn.Text);
-                //IEnumerable<string> jtData = ProcessJToken(token, convertOptions);
-                //return string.Join(Environment.NewLine, jtData);
+                return result;
 
             }
             catch (Exception ex)
@@ -75,9 +93,9 @@ namespace Secrets2GitlabVar
             if (string.IsNullOrEmpty(jsonString)) { return string.Empty; }
 
             string cs = GetChildSeparator(convertOptions.ChildSeparator);
+            string es = GetEqualitySymbol(convertOptions.EqualitySymbol);
+            string fullES = convertOptions.SpacesInEqualitySymbol ? $" {es} " : $"{es}";
             (string abL, string abR) = GetArrayBrackets(convertOptions.ArrayBrackets);
-            char esChar = convertOptions.EqualitySymbol == EqualitySymbol.Equal ? '=' : ':';
-            string fullES = convertOptions.SpacesInEqualitySymbol ? $" {esChar} " : $"{esChar}";
 
             List<string> resultLines = new();
             JToken root = JToken.Parse(jsonString);
@@ -120,6 +138,18 @@ namespace Secrets2GitlabVar
             }
 
             return string.Join(Environment.NewLine, resultLines);
+        }
+
+        private string GetEqualitySymbol(EqualitySymbol equalitySymbol)
+        {
+            switch (equalitySymbol)
+            {
+                case EqualitySymbol.Equal: return "=";
+                case EqualitySymbol.Colon: return ":";
+                case EqualitySymbol.GreaterThan: return ">";
+                case EqualitySymbol.Arrow: return "->";
+                default: return "=";
+            }
         }
 
         private string GetChildSeparator(ChildSeparator childSeparator)
@@ -169,15 +199,8 @@ namespace Secrets2GitlabVar
 
         private void lblDemoVal_Click(object sender, EventArgs e)
         {
-            txtIn.Text = @"{
-                ""Full Name"": ""Alex Virlan"",
-                ""Age"": 26,
-                ""Address"": {
-                    ""Street"": ""123 Main St"",
-                    ""City"": ""New York""
-                },
-                ""Hobbies"": [""Coding"", ""Sleeping""]
-            }";
+            byte[] dataBytes = Properties.Resources.DemoValues;
+            txtIn.Text = Encoding.UTF8.GetString(dataBytes);
             TriggerConvert(sender, e);
         }
 
@@ -185,6 +208,50 @@ namespace Secrets2GitlabVar
         {
             if (_loading) { return; }
             if (chkAutoConvert.Checked) { txtOut.Text = Convert(txtIn.Text); }
+        }
+
+        private void lblCopy2CB_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txtOut.Text);
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.AutoConvert = chkAutoConvert.Checked;
+            Settings.AutoCopy = chkAutoCopy.Checked;
+            Settings.RememberInput = chkRememberInput.Checked;
+            Settings.ConvertOptions.SpacesInEqualitySymbol = chkSpaceInES.Checked;
+            Settings.ConvertOptions.TrimProperties = chkTrimProp.Checked;
+            Settings.ConvertOptions.TrimValues = chkTrimVal.Checked;
+            Settings.ConvertOptions.EqualitySymbol = (EqualitySymbol)cmbES.SelectedIndex;
+            Settings.ConvertOptions.ChildBehaviour = (ChildBehaviour)cmbChildBeh.SelectedIndex;
+            Settings.ConvertOptions.ChildSeparator = (ChildSeparator)cmbChildSep.SelectedIndex;
+            Settings.ConvertOptions.ArrayBehaviour = (ArrayBehaviour)cmbArrayBeh.SelectedIndex;
+            Settings.ConvertOptions.ArrayBrackets = (ArrayBrackets)cmbArrayBrack.SelectedIndex;
+            Settings.InputData = Settings.RememberInput ? txtIn.Text : "";
+            AppSettings.Save();
+        }
+
+        private void lblResetSet_Click(object sender, EventArgs e)
+        {
+            Settings.AutoConvert = false;
+            Settings.AutoCopy = false;
+            Settings.RememberInput = false;
+            Settings.ConvertOptions.SpacesInEqualitySymbol = false;
+            Settings.ConvertOptions.TrimProperties = true;
+            Settings.ConvertOptions.TrimValues = true;
+            Settings.ConvertOptions.EqualitySymbol = EqualitySymbol.Equal;
+            Settings.ConvertOptions.ChildBehaviour = ChildBehaviour.Include;
+            Settings.ConvertOptions.ChildSeparator = ChildSeparator.Dot;
+            Settings.ConvertOptions.ArrayBehaviour = ArrayBehaviour.Include;
+            Settings.ConvertOptions.ArrayBrackets = ArrayBrackets.Square;
+            Settings.InputData = "";
+            ApplySettingsToUI();
+        }
+
+        public void UpdateStats()
+        {
+            lblStats.Text = $"Runs: {Settings.Runs}, Conv.: {Settings.Conversions}";
         }
 
         [Obsolete("Replaced by the new 'ProcessJson' method that can handle more convert options.")]
@@ -231,5 +298,6 @@ namespace Secrets2GitlabVar
                 yield return $"{parentPath}{fullES}{tokenStr}";
             }
         }
+
     }
 }

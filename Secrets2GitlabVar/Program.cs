@@ -16,8 +16,7 @@ namespace Secrets2GitlabVar
             {
                 ApplicationConfiguration.Initialize();
                 frmMain frmMain = new(args);
-                frmMain.Show();
-                Application.Run();
+                Application.Run(frmMain);
             }
             else
             {

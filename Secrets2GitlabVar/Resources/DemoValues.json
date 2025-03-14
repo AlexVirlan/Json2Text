@@ -1,0 +1,12 @@
+{
+    "Full Name": "Alex Virlan",
+    "Age": 26,
+    "Address": {
+        "Street": "123 Main St",
+        "City": "New York"
+    },
+    "Hobbies": [
+        "Coding",
+        "Sleeping"
+    ]
+}
