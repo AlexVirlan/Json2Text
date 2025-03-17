@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json;
-using Json2Text.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Json2Text.Entities;
+using Newtonsoft.Json;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Json2Text.Utilities
 {

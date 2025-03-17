@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Json2Text.Utilities
+﻿namespace Json2Text.Utilities
 {
     public static class Extensions
     {

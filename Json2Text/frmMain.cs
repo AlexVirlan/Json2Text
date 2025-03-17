@@ -1,14 +1,8 @@
-using DeviceId.Components;
-using DeviceId.Encoders;
-using DeviceId.Formatters;
 using DeviceId;
-using Newtonsoft.Json.Linq;
 using Json2Text.Entities;
 using Json2Text.Utilities;
+using Newtonsoft.Json.Linq;
 using System.Text;
-using System.Security.Cryptography;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Json2Text
 {
