@@ -69,7 +69,7 @@
             txtIn.Multiline = true;
             txtIn.Name = "txtIn";
             txtIn.ScrollBars = ScrollBars.Both;
-            txtIn.Size = new Size(470, 304);
+            txtIn.Size = new Size(460, 303);
             txtIn.TabIndex = 0;
             txtIn.TextChanged += txtIn_TextChanged;
             // 
@@ -82,13 +82,13 @@
             txtOut.Multiline = true;
             txtOut.Name = "txtOut";
             txtOut.ScrollBars = ScrollBars.Both;
-            txtOut.Size = new Size(470, 304);
+            txtOut.Size = new Size(460, 303);
             txtOut.TabIndex = 1;
             // 
             // chkAutoConvert
             // 
             chkAutoConvert.AutoSize = true;
-            chkAutoConvert.Location = new Point(863, 357);
+            chkAutoConvert.Location = new Point(853, 357);
             chkAutoConvert.Name = "chkAutoConvert";
             chkAutoConvert.Size = new Size(95, 19);
             chkAutoConvert.TabIndex = 11;
@@ -106,7 +106,7 @@
             btnConvert.FlatStyle = FlatStyle.Flat;
             btnConvert.Location = new Point(712, 352);
             btnConvert.Name = "btnConvert";
-            btnConvert.Size = new Size(145, 29);
+            btnConvert.Size = new Size(135, 29);
             btnConvert.TabIndex = 10;
             btnConvert.Text = "C O N V E R T";
             btnConvert.UseVisualStyleBackColor = false;
@@ -359,7 +359,7 @@
             lblStats.ForeColor = Color.Gray;
             lblStats.Location = new Point(579, 417);
             lblStats.Name = "lblStats";
-            lblStats.Size = new Size(379, 15);
+            lblStats.Size = new Size(369, 15);
             lblStats.TabIndex = 14;
             lblStats.Text = "-";
             lblStats.TextAlign = ContentAlignment.MiddleCenter;
@@ -408,7 +408,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(971, 443);
+            ClientSize = new Size(960, 443);
             Controls.Add(cmbArrayBrack);
             Controls.Add(cmbArrayBeh);
             Controls.Add(cmbChildBeh);

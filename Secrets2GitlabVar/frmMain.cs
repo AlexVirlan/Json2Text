@@ -1,7 +1,14 @@
+using DeviceId.Components;
+using DeviceId.Encoders;
+using DeviceId.Formatters;
+using DeviceId;
 using Newtonsoft.Json.Linq;
 using Secrets2GitlabVar.Entities;
 using Secrets2GitlabVar.Utilities;
 using System.Text;
+using System.Security.Cryptography;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Secrets2GitlabVar
 {
@@ -10,6 +17,7 @@ namespace Secrets2GitlabVar
         #region Variables
         private bool _loading = false;
         private List<string>? _args = null;
+        private string _deviceFingerprint = "";
         #endregion
 
         public frmMain(List<string>? args = null)
@@ -20,23 +28,50 @@ namespace Secrets2GitlabVar
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            _loading = true;
-
-            FunctionResponse frLoadSet = AppSettings.Load();
-            Settings.Runs++;
-            ApplySettingsToUI();
-
-            if (_args is not null && _args.Count > 0)
+            try
             {
-                string? filePath = _args.FirstOrDefault();
-                if (File.Exists(filePath))
-                {
-                    txtIn.Text = File.ReadAllText(filePath);
-                    TriggerConvert(sender, e);
-                }
-            }
+                _loading = true;
 
-            _loading = false;
+                FunctionResponse frLoadSet = AppSettings.Load();
+                Settings.Runs++;
+                GetDeviceFingerprint();
+
+                if (_args is not null && _args.Count > 0)
+                {
+                    string? filePath = _args.FirstOrDefault();
+                    (bool readSuccess, string readResult) = Helpers.TryToReadTextFile(filePath, returnExceptionString: true);
+                    Settings.InputData = readResult;
+                    if (readSuccess) { TriggerConvert(sender, e); }
+                }
+                else
+                {
+                    DecodeSavedInputData();
+                }
+
+                ApplySettingsToUI();
+
+                _loading = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message + Environment.NewLine + "The application will exit.",
+                    "Secrets2GitlabVar - Startup error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
+        }
+
+        private void GetDeviceFingerprint()
+        {
+            string tokenPath = Path.Combine(Application.StartupPath, "Secrets2GitlabVar.token");
+            _deviceFingerprint = "@" + new DeviceIdBuilder()
+                .AddUserName()
+                .AddMachineName()
+                //.OnWindows(winDevBuilder => winDevBuilder
+                //    .AddMotherboardSerialNumber()
+                //    .AddSystemDriveSerialNumber())
+                .AddFileToken(tokenPath)
+                .UseFormatter(DeviceIdFormatters.DefaultV6)
+                .ToString() + "@";
         }
 
         private void ApplySettingsToUI()
@@ -54,8 +89,40 @@ namespace Secrets2GitlabVar
             cmbChildSep.SelectedIndex = (int)Settings.ConvertOptions.ChildSeparator;
             cmbArrayBeh.SelectedIndex = (int)Settings.ConvertOptions.ArrayBehaviour;
             cmbArrayBrack.SelectedIndex = (int)Settings.ConvertOptions.ArrayBrackets;
-            if (Settings.RememberInput) { txtIn.Text = Settings.InputData; }
+            txtIn.Text = Settings.InputData;
             UpdateStats();
+        }
+
+        private void EncodeSavedInputData()
+        {
+            string result = string.Empty;
+            try
+            {
+                if (Settings.RememberInput &&
+                    !txtIn.Text.INOE() &&
+                    !_deviceFingerprint.INOE())
+                {
+                    result = AesEncryption.EncryptString(txtIn.Text, _deviceFingerprint);
+                }
+            }
+            catch (Exception) { }
+            finally { Settings.InputData = result; }
+        }
+
+        private void DecodeSavedInputData()
+        {
+            string result = string.Empty;
+            try
+            {
+                if (Settings.RememberInput &&
+                    !Settings.InputData.INOE() &&
+                    !_deviceFingerprint.INOE())
+                {
+                    result = AesEncryption.DecryptString(Settings.InputData, _deviceFingerprint);
+                }
+            }
+            catch (Exception) { }
+            finally { Settings.InputData = result; }
         }
 
         private string Convert(string data)
@@ -234,7 +301,7 @@ namespace Secrets2GitlabVar
             Settings.ConvertOptions.ChildSeparator = (ChildSeparator)cmbChildSep.SelectedIndex;
             Settings.ConvertOptions.ArrayBehaviour = (ArrayBehaviour)cmbArrayBeh.SelectedIndex;
             Settings.ConvertOptions.ArrayBrackets = (ArrayBrackets)cmbArrayBrack.SelectedIndex;
-            Settings.InputData = Settings.RememberInput ? txtIn.Text : "";
+            EncodeSavedInputData();
             AppSettings.Save();
         }
 
@@ -316,6 +383,5 @@ namespace Secrets2GitlabVar
                 yield return $"{parentPath}{fullES}{tokenStr}";
             }
         }
-
     }
 }

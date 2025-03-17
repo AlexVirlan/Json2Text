@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Secrets2GitlabVar": {
+      "commandName": "Project"
+    }
+  }
+}

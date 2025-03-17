@@ -11,8 +11,8 @@ namespace Secrets2GitlabVar.Utilities
 {
     public class Settings
     {
-        public static uint Runs = 0;
-        public static uint Conversions = 0;
+        public static ulong Runs = 0;
+        public static ulong Conversions = 0;
         public static bool AutoConvert = false;
         public static bool AutoCopy = false;
         public static bool RememberInput = false;
@@ -27,10 +27,10 @@ namespace Secrets2GitlabVar.Utilities
     {
         #region Properties
         [JsonProperty("Runs")]
-        public uint runs { get { return Runs; } set { Runs = value; } }
+        public ulong runs { get { return Runs; } set { Runs = value; } }
 
         [JsonProperty("Conversions")]
-        public uint conversions { get { return Conversions; } set { Conversions = value; } }
+        public ulong conversions { get { return Conversions; } set { Conversions = value; } }
 
         [JsonProperty("AutoConvert")]
         public bool autoConvert { get { return AutoConvert; } set { AutoConvert = value; } }
