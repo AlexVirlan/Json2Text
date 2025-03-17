@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Secrets2GitlabVar.Utilities
+namespace Json2Text.Utilities
 {
     public class Helpers
     {

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Secrets2GitlabVar": {
+    "Json2Text": {
       "commandName": "Project"
     }
   }

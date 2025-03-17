@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Secrets2GitlabVar.Entities
+namespace Json2Text.Entities
 {
     public class ConvertOptions
     {

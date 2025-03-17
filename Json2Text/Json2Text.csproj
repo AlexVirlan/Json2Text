@@ -6,22 +6,23 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StartupObject>Secrets2GitlabVar.Program</StartupObject>
+    <StartupObject>Json2Text.Program</StartupObject>
     <Authors>Alex Virlan</Authors>
     <Copyright>Alex Virlan</Copyright>
-    <PackageProjectUrl>https://github.com/AlexVirlan/Secrets2GitlabVar</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/AlexVirlan/Secrets2GitlabVar</RepositoryUrl>
-    <ApplicationIcon>Resources\S2G.ico</ApplicationIcon>
-    <PackageIcon>S2G.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/AlexVirlan/Json2Text</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AlexVirlan/Json2Text</RepositoryUrl>
+    <ApplicationIcon>Resources\J2T.ico</ApplicationIcon>
+    <PackageIcon>J2T.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Demo values.json" />
     <None Remove="DemoValues.json" />
+    <None Remove="Resources\J2T.psd" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\S2G.ico" />
+    <Content Include="Resources\J2T.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,11 +37,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -51,9 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <None Update="Resources\J2T.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
     <None Update="Resources\S2G.png">
       <Pack>True</Pack>

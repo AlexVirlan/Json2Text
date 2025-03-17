@@ -1,2 +1,2 @@
-# Secrets2GitlabVar
-Secrets2GitlabVar
+# Json2Text
+Json2Text

@@ -1,4 +1,4 @@
-﻿namespace Secrets2GitlabVar
+﻿namespace Json2Text
 {
     partial class frmMain
     {
@@ -444,7 +444,7 @@
             MaximizeBox = false;
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Secrets2GitlabVar - AvA.Soft";
+            Text = "Json2Text - AvA.Soft";
             FormClosing += frmMain_FormClosing;
             Load += frmMain_Load;
             ResumeLayout(false);

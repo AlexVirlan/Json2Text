@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Secrets2GitlabVar.Entities;
+using Json2Text.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Secrets2GitlabVar.Utilities
+namespace Json2Text.Utilities
 {
     public class Settings
     {
@@ -103,7 +103,7 @@ namespace Secrets2GitlabVar.Utilities
             if (fileName.Trim().INOE()) { fileName = "App.set"; }
             if (inOrFromAppData)
             {
-                string appName = Assembly.GetEntryAssembly()?.GetName()?.Name ?? "Secrets2GitlabVar";
+                string appName = Assembly.GetEntryAssembly()?.GetName()?.Name ?? "Json2Text";
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
                     $@"\AvA.Soft\{appName}\{fileName}";
                 return (File.Exists(path), path);

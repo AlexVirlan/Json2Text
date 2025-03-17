@@ -3,14 +3,14 @@ using DeviceId.Encoders;
 using DeviceId.Formatters;
 using DeviceId;
 using Newtonsoft.Json.Linq;
-using Secrets2GitlabVar.Entities;
-using Secrets2GitlabVar.Utilities;
+using Json2Text.Entities;
+using Json2Text.Utilities;
 using System.Text;
 using System.Security.Cryptography;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace Secrets2GitlabVar
+namespace Json2Text
 {
     public partial class frmMain : Form
     {
@@ -55,14 +55,14 @@ namespace Secrets2GitlabVar
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message + Environment.NewLine + "The application will exit.",
-                    "Secrets2GitlabVar - Startup error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Json2Text - Startup error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
         }
 
         private void GetDeviceFingerprint()
         {
-            string tokenPath = Path.Combine(Application.StartupPath, "Secrets2GitlabVar.token");
+            string tokenPath = Path.Combine(Application.StartupPath, "Json2Text.token");
             _deviceFingerprint = "@" + new DeviceIdBuilder()
                 .AddUserName()
                 .AddMachineName()

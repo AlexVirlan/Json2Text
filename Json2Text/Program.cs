@@ -1,4 +1,4 @@
-namespace Secrets2GitlabVar
+namespace Json2Text
 {
     internal static class Program
     {
@@ -11,7 +11,7 @@ namespace Secrets2GitlabVar
             List<string> args = Environment.GetCommandLineArgs().Skip(1).ToList();
             args.ForEach(arg => arg = arg.Replace("-", string.Empty));
 
-            Mutex mutex = new Mutex(true, "AlexVirlan.Secrets2GitlabVar", out bool newInstance);
+            Mutex mutex = new Mutex(true, "AlexVirlan.Json2Text", out bool newInstance);
             if (newInstance)
             {
                 ApplicationConfiguration.Initialize();

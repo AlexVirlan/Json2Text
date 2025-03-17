@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Secrets2GitlabVar.Utilities
+namespace Json2Text.Utilities
 {
     public class AesEncryption
     {
