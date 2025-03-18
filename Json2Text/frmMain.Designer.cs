@@ -91,7 +91,7 @@
             chkAutoConvert.Location = new Point(853, 357);
             chkAutoConvert.Name = "chkAutoConvert";
             chkAutoConvert.Size = new Size(95, 19);
-            chkAutoConvert.TabIndex = 11;
+            chkAutoConvert.TabIndex = 14;
             chkAutoConvert.Text = "Auto convert";
             chkAutoConvert.UseVisualStyleBackColor = true;
             chkAutoConvert.CheckedChanged += chkAutoConvert_CheckedChanged;
@@ -107,7 +107,7 @@
             btnConvert.Location = new Point(712, 352);
             btnConvert.Name = "btnConvert";
             btnConvert.Size = new Size(135, 29);
-            btnConvert.TabIndex = 10;
+            btnConvert.TabIndex = 13;
             btnConvert.Text = "C O N V E R T";
             btnConvert.UseVisualStyleBackColor = false;
             btnConvert.Click += btnConvert_Click;
@@ -140,7 +140,7 @@
             lblPaste.Location = new Point(62, 7);
             lblPaste.Name = "lblPaste";
             lblPaste.Size = new Size(117, 15);
-            lblPaste.TabIndex = 12;
+            lblPaste.TabIndex = 16;
             lblPaste.Text = "Paste from clipboard";
             lblPaste.Click += lblPaste_Click;
             // 
@@ -152,7 +152,7 @@
             lblDemoVal.Location = new Point(191, 7);
             lblDemoVal.Name = "lblDemoVal";
             lblDemoVal.Size = new Size(103, 15);
-            lblDemoVal.TabIndex = 13;
+            lblDemoVal.TabIndex = 17;
             lblDemoVal.Text = "Load demo values";
             lblDemoVal.Click += lblDemoVal_Click;
             // 
@@ -316,7 +316,7 @@
             lblCopy2CB.Location = new Point(548, 7);
             lblCopy2CB.Name = "lblCopy2CB";
             lblCopy2CB.Size = new Size(102, 15);
-            lblCopy2CB.TabIndex = 14;
+            lblCopy2CB.TabIndex = 19;
             lblCopy2CB.Text = "Copy to clipboard";
             lblCopy2CB.Click += lblCopy2CB_Click;
             // 
@@ -326,7 +326,7 @@
             chkAutoCopy.Location = new Point(244, 415);
             chkAutoCopy.Name = "chkAutoCopy";
             chkAutoCopy.Size = new Size(238, 19);
-            chkAutoCopy.TabIndex = 9;
+            chkAutoCopy.TabIndex = 12;
             chkAutoCopy.Text = "Auto-copy to clipboard after conversion";
             chkAutoCopy.UseVisualStyleBackColor = true;
             chkAutoCopy.CheckedChanged += TriggerConvert;
@@ -349,7 +349,7 @@
             lblResetSet.Location = new Point(494, 416);
             lblResetSet.Name = "lblResetSet";
             lblResetSet.Size = new Size(79, 15);
-            lblResetSet.TabIndex = 14;
+            lblResetSet.TabIndex = 15;
             lblResetSet.Text = "Reset settings";
             lblResetSet.Click += lblResetSet_Click;
             // 
@@ -372,7 +372,7 @@
             chkInWW.Location = new Point(306, 6);
             chkInWW.Name = "chkInWW";
             chkInWW.Size = new Size(84, 19);
-            chkInWW.TabIndex = 9;
+            chkInWW.TabIndex = 18;
             chkInWW.Text = "Word wrap";
             chkInWW.UseVisualStyleBackColor = true;
             chkInWW.CheckedChanged += chkInWW_CheckedChanged;
@@ -385,7 +385,7 @@
             chkOutWW.Location = new Point(662, 6);
             chkOutWW.Name = "chkOutWW";
             chkOutWW.Size = new Size(84, 19);
-            chkOutWW.TabIndex = 9;
+            chkOutWW.TabIndex = 20;
             chkOutWW.Text = "Word wrap";
             chkOutWW.UseVisualStyleBackColor = true;
             chkOutWW.CheckedChanged += chkOutWW_CheckedChanged;
@@ -398,7 +398,7 @@
             chkIgnorePropWNoVal.Location = new Point(689, 390);
             chkIgnorePropWNoVal.Name = "chkIgnorePropWNoVal";
             chkIgnorePropWNoVal.Size = new Size(215, 19);
-            chkIgnorePropWNoVal.TabIndex = 9;
+            chkIgnorePropWNoVal.TabIndex = 10;
             chkIgnorePropWNoVal.Text = "Ignore properties with empty values";
             chkIgnorePropWNoVal.UseVisualStyleBackColor = true;
             chkIgnorePropWNoVal.CheckedChanged += TriggerConvert;

@@ -56,7 +56,7 @@ namespace Json2Text
 
         private void GetDeviceFingerprint()
         {
-            string tokenPath = Path.Combine(Application.StartupPath, "Json2Text.token");
+            string tokenPath = AppSettings.GetSetFilePath("Json2Text.token", inOrFromAppData: true).path;
             _deviceFingerprint = "@" + new DeviceIdBuilder()
                 .AddUserName()
                 .AddMachineName()
